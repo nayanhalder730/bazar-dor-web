@@ -4,6 +4,7 @@ import "./globals.css";
 import NavberPage from "./components/Navber";
 import NavLinks from "./components/NavLinks";
 import MarqueTexNav from "./components/MarqueTexNav";
+import Footer from "./components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,7 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      data-theme="light"
+     data-theme="light"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <MarqueTexNav/>
 
         {children}
+        <Footer />
       </body>
     </html>
   );

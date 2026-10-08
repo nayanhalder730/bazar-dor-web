@@ -4,7 +4,9 @@ import { Category } from "../type/type";
 
 const toBanglaNum = (num: number | string | undefined): string => {
   if (num === undefined || num === null) return "০";
+
   const banglaDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+
   return num
     .toString()
     .replace(/\d/g, (digit) => banglaDigits[parseInt(digit, 10)]);
@@ -15,9 +17,14 @@ const MarqueTexNav = async () => {
 
   return (
     <div className="w-full bg-[#fcfdfd] border-y border-gray-100 py-2.5 overflow-hidden select-none">
-      <Marquee direction="left" speed={50} gradient={false} pauseOnHover={true}>
+      <Marquee
+        direction="left"
+        speed={50}
+        gradient={false}
+        pauseOnHover={true}
+      >
         <div className="flex items-center">
-          {allProduct?.map((item) => {
+          {allProduct.map((item) => {
             const isUp = item?.change?.dir === "up";
             const isDown = item?.change?.dir === "down";
 
@@ -26,12 +33,10 @@ const MarqueTexNav = async () => {
                 key={item.id}
                 className="flex items-center gap-2 text-sm text-gray-800 px-6 border-r border-gray-200"
               >
-         
                 <span className="text-base flex-shrink-0">
                   {item.categoryIcon}
                 </span>
 
-           
                 <span className="font-semibold text-gray-900 whitespace-nowrap">
                   {item.nameBn}
                 </span>
@@ -52,7 +57,10 @@ const MarqueTexNav = async () => {
                   <span className="text-[10px]">
                     {isUp ? "▲" : isDown ? "▼" : "•"}
                   </span>
-                  <span>{toBanglaNum(item?.change?.pct?.toFixed(1))}%</span>
+
+                  <span>
+                    {toBanglaNum(item?.change?.pct?.toFixed(1))}%
+                  </span>
                 </span>
               </div>
             );
