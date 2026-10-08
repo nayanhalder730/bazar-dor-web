@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import NavberPage from "./components/Navber";
 import NavLinks from "./components/NavLinks";
+import MarqueTexNav from "./components/MarqueTexNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <NavberPage />
         <NavLinks />
+        <MarqueTexNav/>
 
         {children}
       </body>
