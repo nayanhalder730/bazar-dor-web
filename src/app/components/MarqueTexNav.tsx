@@ -1,6 +1,7 @@
 import { fetchAllData } from "../lib/fetchData";
 import Marquee from "react-fast-marquee";
 import { Category } from "../type/type";
+import Link from "next/link";
 
 const toBanglaNum = (num: number | string | undefined): string => {
   if (num === undefined || num === null) return "০";
@@ -29,7 +30,8 @@ const MarqueTexNav = async () => {
             const isDown = item?.change?.dir === "down";
 
             return (
-              <div
+              <Link
+              href={`/productDetail/${item.id}`}
                 key={item.id}
                 className="flex items-center gap-2 text-sm text-gray-800 px-6 border-r border-gray-200"
               >
@@ -62,7 +64,7 @@ const MarqueTexNav = async () => {
                     {toBanglaNum(item?.change?.pct?.toFixed(1))}%
                   </span>
                 </span>
-              </div>
+              </Link>
             );
           })}
         </div>
