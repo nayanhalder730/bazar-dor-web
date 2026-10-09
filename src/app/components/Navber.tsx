@@ -1,6 +1,6 @@
 import Image from "next/image";
 import navLogo from "../../../public/logo-icon.png";
-import { Button } from "@heroui/react";
+import ButtonAndProfile from "./ButtonAndProfile";
 const options = {
   weekday: "short",
   day: "numeric",
@@ -14,7 +14,7 @@ const NavberPage = () => {
     <div className="container mx-auto">
       <header className="w-full bg-white border-b border-gray-100 px-6 py-3">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Left Side: Logo & Title */}
+        
           <div className="flex items-center gap-3">
             <div className="bg-[#009640] p-2.5 rounded-xl flex items-center justify-center">
               <Image
@@ -32,11 +32,9 @@ const NavberPage = () => {
               <p className="text-xs text-gray-500 font-medium mt-0.5">{date}</p>
             </div>
           </div>
-
-          {/* Right Side: User Profile */}
-          <div className="flex items-center gap-2 cursor-pointer select-none">
-            <Button> sign In</Button>
-            <Button> sign out</Button>
+          <div>
+            <ButtonAndProfile></ButtonAndProfile>
+           
           </div>
 
         </div>

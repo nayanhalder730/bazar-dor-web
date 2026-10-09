@@ -5,6 +5,7 @@ import NavberPage from "./components/Navber";
 import NavLinks from "./components/NavLinks";
 import MarqueTexNav from "./components/MarqueTexNav";
 import Footer from "./components/Footer";
+import { ToastContainer } from "react-toastify";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,15 +26,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-     data-theme="light"
+      data-theme="light"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <NavberPage />
         <NavLinks />
-        <MarqueTexNav/>
+        <MarqueTexNav />
 
         {children}
+        <ToastContainer position="top-right" autoClose={3000}/>
         <Footer />
       </body>
     </html>
