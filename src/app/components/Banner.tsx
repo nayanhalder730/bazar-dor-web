@@ -3,6 +3,7 @@
 import { Button } from "@heroui/react";
 import Image from "next/image";
 import bannerImg from "../../../public/bazar-hero.png";
+import Link from "next/link";
 
 const options = {
   weekday: "short",
@@ -33,9 +34,9 @@ const Banner = () => {
               বিস্তারিত, গড়, সর্বনিম্ন-সর্বাধিক এবং দামের পরিবর্তন এক জায়গায়।
             </p>
 
-            <Button className="mt-2 rounded-xl bg-[#009640] px-6 py-2.5 font-medium text-white hover:bg-[#007d35]">
+            <Link href="/"><Button className="mt-2 rounded-xl bg-[#009640] px-6 py-2.5 font-medium text-white hover:bg-[#007d35]">
               সব পণ্য দেখুন
-            </Button>
+            </Button></Link>
           </div>
 
           <div className="flex w-full flex-shrink-0 justify-center md:w-auto">
