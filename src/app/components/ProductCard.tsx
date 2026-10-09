@@ -68,9 +68,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ item }) => {
           <div
             className={`flex shrink-0 items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold ${
               isUp
-                ? "bg-green-50 text-green-600"
+                ? "bg-green-50 text-red-600"
                 : isDown
-                ? "bg-red-50 text-red-600"
+                ? "bg-red-50 text-green-600"
                 : "bg-gray-100 text-gray-600"
             }`}
           >

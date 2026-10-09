@@ -25,7 +25,7 @@ export default async function Home() {
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
               আজ দাম বেড়েছে{" "}
-              <span className="text-green-600">▲</span>
+              <span className="text-red-600">▲</span>
             </h2>
 
           </div>
@@ -41,7 +41,7 @@ export default async function Home() {
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
               আজ দাম কমেছে{" "}
-              <span className="text-red-600">▼</span>
+              <span className="text-green-600">▼</span>
             </h2>
 
           
