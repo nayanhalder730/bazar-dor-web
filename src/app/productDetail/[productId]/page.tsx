@@ -2,7 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import type { Category } from "@/app/type/type";
+import type { Category } from "../../type/type";
 
 export const instant = false;
 

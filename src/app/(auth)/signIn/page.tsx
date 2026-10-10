@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { authClient } from "@/app/lib/auth-client";
+import Link from "next/link";
 import { FloppyDisk } from "@gravity-ui/icons";
 import {
   Button,
@@ -13,10 +13,10 @@ import {
   Label,
   TextField,
 } from "@heroui/react";
-import Link from "next/link";
 import { toast } from "react-toastify";
+import { authClient } from "../../lib/auth-client";
 
-export default function Basic() {
+export default function SignInPage() {
   const [loading, setLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState(false);
   const router = useRouter();
@@ -48,9 +48,6 @@ export default function Basic() {
       }
 
       toast.success("সাইন ইন সফল হয়েছে!");
-
-      await authClient.getSession();
-
       router.replace("/");
       router.refresh();
     } catch (error) {
@@ -84,16 +81,15 @@ export default function Basic() {
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-[#f3f6f3] px-4 py-10">
-      {" "}
       <div className="mb-6 text-center">
-        {" "}
         <h2 className="mb-2 text-2xl font-bold text-gray-900 md:text-3xl">
-          সাইন ইন{" "}
-        </h2>{" "}
+          সাইন ইন
+        </h2>
         <p className="text-sm text-gray-500 md:text-base">
-          বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে অ্যাকাউন্টে ঢুকুন।{" "}
-        </p>{" "}
+          বিস্তারিত দাম, বাজার তুলনা ও প্রোফাইল দেখতে অ্যাকাউন্টে ঢুকুন।
+        </p>
       </div>
+
       <div className="w-full max-w-md rounded-2xl border border-gray-100 bg-white p-6 shadow-sm sm:p-8">
         <Form className="w-full" onSubmit={onSubmit}>
           <Fieldset className="w-full">
@@ -108,15 +104,15 @@ export default function Basic() {
                     : "সঠিক ইমেইল ঠিকানা লিখুন"
                 }
               >
-                <Label className="text-sm font-medium text-gray-700">
+                <Label className="text-sm font-semibold text-gray-800">
                   ইমেইল
                 </Label>
                 <Input
                   name="email"
                   type="email"
                   aria-label="ইমেইল"
-                  placeholder="name@example.com"
-                  className="mt-1 rounded-lg"
+                  placeholder="you@example.com"
+                  className="mt-1 rounded-lg border border-gray-200 bg-gray-50/50 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:bg-white"
                 />
                 <FieldError />
               </TextField>
@@ -131,7 +127,7 @@ export default function Basic() {
                     : null
                 }
               >
-                <Label className="text-sm font-medium text-gray-700">
+                <Label className="text-sm font-semibold text-gray-800">
                   পাসওয়ার্ড
                 </Label>
                 <Input
@@ -139,7 +135,7 @@ export default function Basic() {
                   type="password"
                   aria-label="পাসওয়ার্ড"
                   placeholder="আপনার পাসওয়ার্ড লিখুন"
-                  className="mt-1 rounded-lg"
+                  className="mt-1 rounded-lg border border-gray-200 bg-gray-50/50 px-3 py-2 text-sm outline-none focus:border-emerald-500 focus:bg-white"
                 />
                 <FieldError />
               </TextField>
@@ -170,22 +166,20 @@ export default function Basic() {
         <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Button
             type="button"
-            aria-label="Google দিয়ে সাইন ইন করুন"
             isDisabled={loading || socialLoading}
             className="w-full rounded-lg border border-gray-200 bg-gray-50 text-xs font-semibold text-gray-700 hover:bg-gray-100"
             onPress={() => socialSignIn("google")}
           >
-            Google দিয়ে চালিয়ে যান
+            Google দিয়ে চালিয়ে যান
           </Button>
 
           <Button
             type="button"
-            aria-label="GitHub দিয়ে সাইন ইন করুন"
             isDisabled={loading || socialLoading}
             className="w-full rounded-lg border border-gray-200 bg-gray-50 text-xs font-semibold text-gray-700 hover:bg-gray-100"
             onPress={() => socialSignIn("github")}
           >
-            GitHub দিয়ে চালিয়ে যান
+            GitHub দিয়ে চালিয়ে যান
           </Button>
         </div>
 
@@ -199,6 +193,7 @@ export default function Basic() {
           </Link>
         </div>
       </div>
+
       <div className="mt-8 text-center">
         <Link
           href="/"

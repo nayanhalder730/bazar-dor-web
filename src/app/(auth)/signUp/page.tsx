@@ -1,7 +1,7 @@
 
 "use client";
 
-import { authClient } from "@/app/lib/auth-client";
+import { authClient } from "../../lib/auth-client";
 import { FloppyDisk } from "@gravity-ui/icons";
 import { toast } from "react-toastify";
 import {
@@ -69,6 +69,7 @@ if (signUpData) {
     } finally {
       setLoading(false);
     }
+    
   };
 
   return (

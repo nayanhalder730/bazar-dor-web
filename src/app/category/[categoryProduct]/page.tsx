@@ -1,6 +1,6 @@
 
-import { Category } from "@/app/type/type";
-import ProductSort from "@/app/components/ProductSorting";
+import { Category } from "../../type/type";
+import ProductSort from "../../components/ProductSorting";
 
 export const instant = false;
 

@@ -2,8 +2,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import ProductCard from "@/app/components/ProductCard";
-import type { Category } from "@/app/type/type";
+import ProductCard from "../components/ProductCard";
+import type { Category } from "../type/type";
 
 interface ProductSortProps {
   products: Category[];
