@@ -1,36 +1,166 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 Bazar Dor — বাজার দর
 
-## Getting Started
+**A modern, responsive web application for exploring and comparing daily market prices in Bangladesh.**
 
-First, run the development server:
+Bazar Dor helps users explore everyday products, compare market prices, identify price increases and decreases, and view product details through a clean, user-friendly interface with Bengali localization.
+
+## 🌐 Live Demo
+
+**[Visit Bazar Dor](https://bazar-dor-web-eight.vercel.app/)**
+
+- **GitHub Repository:** [nayanhalder730/bazar-dor-web](https://github.com/nayanhalder730/bazar-dor-web)
+- **Deployment:** Vercel
+
+## ✨ Features
+
+- **Responsive Design:** Optimized layouts for mobile, tablet, and desktop screens.
+- **Daily Market Prices:** Browse product prices with Bengali numerals and units.
+- **Price Trend Sections:** Explore products with increasing and decreasing prices.
+- **Product Categories:** Browse products by category and sort them by price.
+- **Product Details:** View product information, price summaries, and market-specific prices.
+- **Authentication:** Email and password authentication with Google and GitHub sign-in integration.
+- **Protected Pages:** Authentication-based access to restricted pages.
+- **Interactive Price Ticker:** A scrolling marquee for quick market-price updates.
+- **Loading and Feedback UI:** Loading states and notifications for a smoother user experience.
+- **Profile Management:** A dedicated area for user profile functionality.
+
+## 🛠️ Technology Stack
+
+| Technology | Purpose |
+|---|---|
+| Next.js 16 | React framework and application routing |
+| React 19 | Component-based user interface |
+| TypeScript | Type safety and maintainable code |
+| Tailwind CSS | Responsive styling |
+| HeroUI | UI components |
+| Better Auth | Authentication |
+| MongoDB | Database |
+| React Fast Marquee | Scrolling market-price ticker |
+| React Toastify | Toast notifications |
+| Vercel | Deployment and hosting |
+
+## 🚀 Getting Started
+
+Follow these steps to run the project locally.
+
+### Prerequisites
+
+Make sure you have the following installed:
+
+- Node.js
+- npm
+- Git
+- A MongoDB database
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/nayanhalder730/bazar-dor-web.git
+```
+
+### 2. Navigate to the project directory
+
+```bash
+cd bazar-dor-web
+```
+
+### 3. Install dependencies
+
+```bash
+npm install
+```
+
+### 4. Configure environment variables
+
+Create a `.env.local` file in the project root and configure the following variables with your own credentials.
+
+```env
+MONGODB_URL=
+BETTER_AUTH_SECRET=
+BETTER_AUTH_URL=http://localhost:3000
+NEXT_PUBLIC_BETTER_AUTH_URL=http://localhost:3000
+
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+```
+
+**Important:** Use valid credentials for your own database and OAuth applications. Never commit `.env.local` or publish API secrets in your repository.
+
+For production, configure the appropriate environment variables in your Vercel project settings.
+
+### 5. Start the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 6. Build for production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+```
 
-## Learn More
+To start the production server after building:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 Application Routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+The application includes the following routes:
 
-## Deploy on Vercel
+| Route | Description |
+|---|---|
+| `/` | Home page and market overview |
+| `/category/[categoryProduct]` | Category-specific products |
+| `/productDetail/[productId]` | Product details |
+| `/signIn` | User sign-in |
+| `/signUp` | User registration |
+| `/profile` | User profile |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Some routes require authentication. Access depends on the application's authentication configuration.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🔐 Authentication
+
+Bazar Dor uses Better Auth for authentication and MongoDB for persistent data storage.
+
+Authentication options are configured for:
+
+- Email and password
+- Google OAuth
+- GitHub OAuth
+
+OAuth sign-in requires correctly configured provider credentials and callback URLs. Availability depends on the production configuration.
+
+## 🌍 Deployment
+
+The application is deployed on Vercel.
+
+**Live Application:**  
+https://bazar-dor-web-eight.vercel.app/
+
+**Source Code:**  
+https://github.com/nayanhalder730/bazar-dor-web
+
+## 🎯 Project Goals
+
+The goal of Bazar Dor is to make everyday market-price information easier to explore through an accessible, responsive, and localized web experience.
+
+The project also demonstrates practical use of modern web development technologies, including Next.js, TypeScript, database integration, authentication, responsive UI development, and deployment.
+
+## 👨‍💻 Author
+
+**Nayan Halder**
+
+- GitHub: [@nayanhalder730](https://github.com/nayanhalder730)
+- Project: [Bazar Dor — Live Demo](https://bazar-dor-web-eight.vercel.app/)
+
+---
+
+*Built with Next.js, TypeScript, and a focus on making market-price information easier to access.*
