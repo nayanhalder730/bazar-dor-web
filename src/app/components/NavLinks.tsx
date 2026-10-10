@@ -16,7 +16,7 @@ const NavLinks = () => {
 
   useEffect(() => {
     fetch(
-      "https://api.abcz.workers.dev/api/bazardor/categories"
+      "https://openapi.programming-hero.com/api/bazardor/categories"
     )
       .then((res) => res.json())
       .then((data) => setCategories(data))

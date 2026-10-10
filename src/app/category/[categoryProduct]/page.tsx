@@ -29,7 +29,7 @@ const CategoryProductPage = async ({ params }: PageProps) => {
   const { categoryProduct } = await params;
 
   const res = await fetch(
-    `https://api.abcz.workers.dev/api/bazardor/products?category=${encodeURIComponent(categoryProduct)}`
+    `https://openapi.programming-hero.com/api/bazardor/products?category=${encodeURIComponent(categoryProduct)}`
   );
 
   if (!res.ok) {
