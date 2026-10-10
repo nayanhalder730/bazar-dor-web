@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { FloppyDisk } from "@gravity-ui/icons";
 import {
@@ -16,10 +16,27 @@ import {
 import { toast } from "react-toastify";
 import { authClient } from "../../lib/auth-client";
 
-export default function SignInPage() {
+function SignInForm() {
   const [loading, setLoading] = useState(false);
   const [socialLoading, setSocialLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Google/GitHub login-er por toast dekhano
+  useEffect(() => {
+    const socialLogin = searchParams.get("socialLogin");
+
+    if (socialLogin === "success") {
+      toast.success("সাইন ইন সফল হয়েছে!", { toastId: "social-login-success" });
+      router.replace("/");
+      router.refresh();
+    } else if (socialLogin === "error") {
+      toast.error("সোশ্যাল লগইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।", {
+        toastId: "social-login-error",
+      });
+      router.replace("/signIn", { scroll: false });
+    }
+  }, [searchParams, router]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,7 +82,8 @@ export default function SignInPage() {
 
       const { error } = await authClient.signIn.social({
         provider,
-        callbackURL: "/",
+        callbackURL: "/signIn?socialLogin=success",
+        errorCallbackURL: "/signIn?socialLogin=error",
       });
 
       if (error) {
@@ -170,7 +188,7 @@ export default function SignInPage() {
             className="w-full rounded-lg border border-gray-200 bg-gray-50 text-xs font-semibold text-gray-700 hover:bg-gray-100"
             onPress={() => socialSignIn("google")}
           >
-            Google দিয়ে চালিয়ে যান
+            Google দিয়ে চালিয়ে যান
           </Button>
 
           <Button
@@ -179,7 +197,7 @@ export default function SignInPage() {
             className="w-full rounded-lg border border-gray-200 bg-gray-50 text-xs font-semibold text-gray-700 hover:bg-gray-100"
             onPress={() => socialSignIn("github")}
           >
-            GitHub দিয়ে চালিয়ে যান
+            GitHub দিয়ে চালিয়ে যান
           </Button>
         </div>
 
@@ -203,5 +221,19 @@ export default function SignInPage() {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-[#f3f6f3]">
+          <p className="text-sm text-gray-500">লোড হচ্ছে...</p>
+        </div>
+      }
+    >
+      <SignInForm />
+    </Suspense>
   );
 }

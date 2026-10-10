@@ -1,4 +1,3 @@
-
 "use client";
 
 import { authClient } from "../../lib/auth-client";
@@ -16,15 +15,36 @@ import {
   TextField,
 } from "@heroui/react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function Basic() {
+function SignUpForm() {
   const [loading, setLoading] = useState(false);
+  const [socialLoading, setSocialLoading] = useState(false);
+
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Google/GitHub login-er por toast dekhano
+  useEffect(() => {
+    const socialLogin = searchParams.get("socialLogin");
+
+    if (socialLogin === "success") {
+      toast.success("লগইন সফল হয়েছে!", { toastId: "social-login-success" });
+      router.replace("/");
+      router.refresh();
+    } else if (socialLogin === "error") {
+      toast.error("সোশ্যাল লগইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।", {
+        toastId: "social-login-error",
+      });
+      router.replace("/signUp", { scroll: false });
+    }
+  }, [searchParams, router]);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (loading) return;
+    if (loading || socialLoading) return;
 
     const formData = new FormData(e.currentTarget);
 
@@ -39,7 +59,7 @@ export default function Basic() {
     const password = data.password ?? "";
     const confirmPassword = data.confirmPassword ?? "";
 
-        if (password !== confirmPassword) {
+    if (password !== confirmPassword) {
       toast.error("পাসওয়ার্ড দুটি মিলছে না!");
       return;
     }
@@ -47,29 +67,53 @@ export default function Basic() {
     try {
       setLoading(true);
 
-      const { data: signUpData, error } =
-  await authClient.signUp.email({
-    name,
-    email,
-    password,
-    callbackURL: "/",
-  });
+      const { data: signUpData, error } = await authClient.signUp.email({
+        name,
+        email,
+        password,
+        callbackURL: "/",
+      });
 
-if (error) {
-  toast.error(error.message);
-  return;
-}
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
 
-if (signUpData) {
-  toast.success("Signup successful!");
-  window.location.href = "/";
-}
+      if (signUpData) {
+        toast.success("Signup successful!");
+        window.location.href = "/";
+      }
     } catch (error) {
       toast.error("সাইন আপ করা যায়নি। আবার চেষ্টা করুন।");
     } finally {
       setLoading(false);
     }
-    
+  };
+
+  const socialSignIn = async (provider: "google" | "github") => {
+    if (loading || socialLoading) return;
+
+    try {
+      setSocialLoading(true);
+
+      const { error } = await authClient.signIn.social({
+        provider,
+        callbackURL: "/signUp?socialLogin=success",
+        errorCallbackURL: "/signUp?socialLogin=error",
+      });
+
+      if (error) {
+        toast.error(
+          error.message ||
+            `${provider === "google" ? "Google" : "GitHub"} দিয়ে লগইন করা যায়নি`
+        );
+        setSocialLoading(false);
+      }
+    } catch (error) {
+      console.error("Social sign in error:", error);
+      toast.error("সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+      setSocialLoading(false);
+    }
   };
 
   return (
@@ -183,7 +227,7 @@ if (signUpData) {
             <Fieldset.Actions className="mt-5">
               <Button
                 type="submit"
-                isDisabled={loading}
+                isDisabled={loading || socialLoading}
                 className="w-full rounded-lg bg-[#008744] py-2.5 text-sm font-medium text-white shadow-sm transition-colors hover:bg-[#007038]"
               >
                 <FloppyDisk />
@@ -205,26 +249,18 @@ if (signUpData) {
         <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
           <Button
             type="button"
+            isDisabled={loading || socialLoading}
             className="w-full rounded-lg border border-gray-200 bg-gray-50 text-xs font-semibold text-gray-700 hover:bg-gray-100"
-            onPress={() =>
-              authClient.signIn.social({
-                provider: "google",
-                callbackURL: "/",
-              })
-            }
+            onPress={() => socialSignIn("google")}
           >
             Google দিয়ে চালিয়ে যান
           </Button>
 
           <Button
             type="button"
+            isDisabled={loading || socialLoading}
             className="w-full rounded-lg border border-gray-200 bg-gray-50 text-xs font-semibold text-gray-700 hover:bg-gray-100"
-            onPress={() =>
-              authClient.signIn.social({
-                provider: "github",
-                callbackURL: "/",
-              })
-            }
+            onPress={() => socialSignIn("github")}
           >
             GitHub দিয়ে চালিয়ে যান
           </Button>
@@ -250,5 +286,19 @@ if (signUpData) {
         </Link>
       </div>
     </div>
+  );
+}
+
+export default function SignUpPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center bg-[#f3f6f3]">
+          <p className="text-sm text-gray-500">লোড হচ্ছে...</p>
+        </div>
+      }
+    >
+      <SignUpForm />
+    </Suspense>
   );
 }

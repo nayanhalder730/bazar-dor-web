@@ -10,6 +10,7 @@ import {
   useSession,
   type AppSession,
 } from "../lib/auth-client";
+import { toast } from "react-toastify";
 
 const ButtonAndProfile = () => {
   const { data: rawSession, isPending } = useSession();
@@ -19,29 +20,33 @@ const ButtonAndProfile = () => {
   const router = useRouter();
 
   const handleLogOut = async () => {
-    if (loggingOut) return;
+  if (loggingOut) return;
 
-    try {
-      setLoggingOut(true);
+  try {
+    setLoggingOut(true);
 
-      const { error } = await authClient.signOut({
-        fetchOptions: {
-          onSuccess: () => {
-            router.replace("/");
-            router.refresh();
-          },
+    const { error } = await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("লগআউট সফল হয়েছে!");
+
+          router.replace("/");
+          router.refresh();
         },
-      });
+      },
+    });
 
-      if (error) {
-        console.error("Logout error:", error.message);
-      }
-    } catch (error) {
-      console.error("Logout error:", error);
-    } finally {
-      setLoggingOut(false);
+    if (error) {
+      console.error("Logout error:", error.message);
+      toast.error(error.message || "লগআউট করা যায়নি!");
     }
-  };
+  } catch (error) {
+    console.error("Logout error:", error);
+    toast.error("লগআউট করতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
+  } finally {
+    setLoggingOut(false);
+  }
+};
 
   if (isPending) {
     return (
